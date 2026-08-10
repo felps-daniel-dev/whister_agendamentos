@@ -44,15 +44,15 @@ public class ConsultaService {
     private final LogConsultaService logService;
 
 
-    public ConsultaResponseDTO realizarConsulta(Long id,RealizarConsultaRequestDTO request){
+    public ConsultaResponseDTO realizarConsulta(Long id, RealizarConsultaRequestDTO request) {
         Consulta consulta = consultaRepository.findById(id)
                 .orElseThrow(() -> new ConsultaNaoEncontrada("Consulta não encontrada!"));
 
-        if (!request.motivoPrevio().equals(consulta) && !request.motivoPrevio().isEmpty()){
+        if (!request.motivoPrevio().equals(consulta) && !request.motivoPrevio().isEmpty()) {
             consulta.setMotivoPrevio(request.motivoPrevio());
         }
 
-        if (!request.resultadoConsulta().isEmpty()){
+        if (!request.resultadoConsulta().isEmpty()) {
             consulta.setResultadoConsulta(request.resultadoConsulta());
         }
 
@@ -105,7 +105,7 @@ public class ConsultaService {
         Consulta consulta = consultaRepository.findById(id)
                 .orElseThrow(() -> new ConsultaNaoEncontrada("Esta consulta não existe!"));
 
-        if (consulta.getMotivoCancelamento() == null || !consulta.getMotivoCancelamento().equals(request.motivoCancelamento()) ){
+        if (consulta.getMotivoCancelamento() == null || !consulta.getMotivoCancelamento().equals(request.motivoCancelamento())) {
             consulta.setMotivoCancelamento(request.motivoCancelamento());
             consulta.setStatus(StatusConsulta.CANCELADA);
 
@@ -120,5 +120,10 @@ public class ConsultaService {
     public List<ConsultaResponseDTO> listarConsultas() {
         List<Consulta> listaConsulta = consultaRepository.findAll();
         return consultaMapper.toResponseList(listaConsulta);
+    }
+
+    public List<ConsultaResponseDTO> listarConsultaPorIdPaciente(Long id) {
+        List<Consulta> listaConsultas = consultaRepository.findByPacienteId(id);
+        return consultaMapper.toResponseList(listaConsultas);
     }
 }

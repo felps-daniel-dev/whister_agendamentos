@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.whister</groupId>
-    <artifactId>whister-agendamentos-api</artifactId>
+    <artifactId>whister_agendamentos_api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>whister-agendamentos-api</name>
     <description>whister-agendamentos-api</description>
