@@ -126,4 +126,9 @@ public class ConsultaService {
         List<Consulta> listaConsultas = consultaRepository.findByPacienteId(id);
         return consultaMapper.toResponseList(listaConsultas);
     }
+
+    public List<ConsultaResponseDTO> listarConsultaPorIdMedico(Long id) {
+        List<Consulta> listaConsultas = consultaRepository.findByMedicoId(id);
+        return consultaMapper.toResponseList(listaConsultas);
+    }
 }

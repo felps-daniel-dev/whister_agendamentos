@@ -48,12 +48,16 @@ public class ConsultaController {
     }
 
 
-    @GetMapping("/paciente/{id}/consultas")
+    @GetMapping("/paciente/{id}/consulta")
     public ResponseEntity<List<ConsultaResponseDTO>> listarConsultaPorIdPaciente(@PathVariable Long id){
         return ResponseEntity.ok().body(consultaService.listarConsultaPorIdPaciente(id));
     }
-    //listar consultas de cada paciente com ou sem filtro do dia
-    //listar consultas de cada médico com ou sem filtro do dia
+
+    @GetMapping("/medico/{id}/consulta")
+    public ResponseEntity<List<ConsultaResponseDTO>> listarConsultaPoridMedico(@PathVariable Long id){
+        return ResponseEntity.ok().body(consultaService.listarConsultaPorIdMedico(id));
+    }
+    //fazer rotina que retorna todas as consultas do dia tanto para médicos e pacientes para questão de emails e relatorio diario para o médico
     //pensar na rotina que vai notificar o cliente
     //cauculadora de consultas
 }
