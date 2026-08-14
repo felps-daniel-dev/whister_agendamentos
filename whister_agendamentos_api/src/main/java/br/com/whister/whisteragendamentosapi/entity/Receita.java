@@ -1,5 +1,7 @@
 package br.com.whister.whisteragendamentosapi.entity;
 
+import java.util.List;
+
 public class Receita {
 
     private Paciente paciente;
@@ -8,7 +10,7 @@ public class Receita {
 
     private Medico medico;
 
-    private String medicacoes;
+    private List<String> medicacoes;
 
     
 }

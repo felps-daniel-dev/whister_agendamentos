@@ -60,4 +60,11 @@ public class ConsultaController {
     //fazer rotina que retorna todas as consultas do dia tanto para médicos e pacientes para questão de emails e relatorio diario para o médico
     //pensar na rotina que vai notificar o cliente
     //cauculadora de consultas
+
+    @PostMapping("/teste/calculo/consulta")
+    public ResponseEntity<ConsultaResponseDTO> testeValorConsulta(@RequestBody ConsultaRequestDTO req){
+        return ResponseEntity.ok().body(consultaService.testeCalculoConsulta(req);
+    }
+
+
 }

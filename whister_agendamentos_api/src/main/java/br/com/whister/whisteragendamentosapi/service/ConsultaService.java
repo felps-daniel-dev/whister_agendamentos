@@ -5,10 +5,7 @@ import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaCancelamentoDT
 import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaRequestDTO;
 import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaResponseDTO;
 import br.com.whister.whisteragendamentosapi.dto.consulta.RealizarConsultaRequestDTO;
-import br.com.whister.whisteragendamentosapi.entity.Consulta;
-import br.com.whister.whisteragendamentosapi.entity.Medico;
-import br.com.whister.whisteragendamentosapi.entity.Paciente;
-import br.com.whister.whisteragendamentosapi.entity.Sala;
+import br.com.whister.whisteragendamentosapi.entity.*;
 import br.com.whister.whisteragendamentosapi.entity.enums.StatusConsulta;
 import br.com.whister.whisteragendamentosapi.exception.custom.ConsultaNaoEncontrada;
 import br.com.whister.whisteragendamentosapi.exception.custom.MedicoNaoEncontrado;
@@ -130,5 +127,12 @@ public class ConsultaService {
     public List<ConsultaResponseDTO> listarConsultaPorIdMedico(Long id) {
         List<Consulta> listaConsultas = consultaRepository.findByMedicoId(id);
         return consultaMapper.toResponseList(listaConsultas);
+    }
+
+    @Autowired
+    private Calculadora calc;
+
+    public ConsultaResponseDTO testeCalculoConsulta(ConsultaRequestDTO req) {
+        return null;
     }
 }
