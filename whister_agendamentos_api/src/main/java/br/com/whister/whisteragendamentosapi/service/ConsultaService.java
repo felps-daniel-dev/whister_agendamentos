@@ -134,8 +134,20 @@ public class ConsultaService {
 
     public ConsultaResponseDTO testeCalculoConsulta(ConsultaRequestDTO req) {
         Consulta consulta = consultaMapper.toEntity(req);
-        // o BO ta na consulta mapper que não esta passando os valores
 
+        consulta.setMedico(medicoRepository.findById(req.medicoId())
+                .orElseThrow(() -> new MedicoNaoEncontrado("Este médico não existe!"))
+        );
+
+        consulta.setPaciente(
+                pacienteRepository.findById(req.pacienteId())
+                        .orElseThrow(() -> new PacienteNaoEncontrado("Este paciente não existe!"))
+        );
+
+        consulta.setSala(
+                salaRepository.findById(req.salaId())
+                        .orElseThrow(() -> new SalaNaoEncontrada("Esta Sala não existe!"))
+        );
 
         consulta.setCriadoEm(LocalDate.now());
         consulta.setAtualizadoEm(LocalDate.now());
