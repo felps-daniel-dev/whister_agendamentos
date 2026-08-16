@@ -63,7 +63,7 @@ public class ConsultaController {
 
     @PostMapping("/teste/calculo/consulta")
     public ResponseEntity<ConsultaResponseDTO> testeValorConsulta(@RequestBody ConsultaRequestDTO req){
-        return ResponseEntity.ok().body(consultaService.testeCalculoConsulta(req);
+        return ResponseEntity.ok().body(consultaService.testeCalculoConsulta(req));
     }
 
 

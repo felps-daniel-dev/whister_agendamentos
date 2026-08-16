@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Calculadora {
 
     public Consulta calculaValorConsulta(Consulta consulta) {
-        double descontoTotal;
+        double descontoTotal = 0.0;
 
         Double descontoEspecialidade = consulta.getMedico().getEspecialidade().getDescontoPromocional();
 
@@ -20,7 +20,7 @@ public class Calculadora {
 
         BigDecimal valorFinal = new BigDecimal("0.00");
 
-        double adicionalTotal;
+        double adicionalTotal = 0.0;
 
 
         descontoTotal = ((valorBrutoConsulta.doubleValue() / descontoPorcentagemPlano) * 100)

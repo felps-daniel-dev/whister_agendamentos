@@ -12,5 +12,7 @@ public class Receita {
 
     private List<String> medicacoes;
 
+    private String assinatura;
+
     
 }

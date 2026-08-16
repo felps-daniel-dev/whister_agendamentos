@@ -133,6 +133,18 @@ public class ConsultaService {
     private Calculadora calc;
 
     public ConsultaResponseDTO testeCalculoConsulta(ConsultaRequestDTO req) {
-        return null;
+        Consulta consulta = consultaMapper.toEntity(req);
+        // o BO ta na consulta mapper que não esta passando os valores
+
+
+        consulta.setCriadoEm(LocalDate.now());
+        consulta.setAtualizadoEm(LocalDate.now());
+        consultaRepository.save(consulta);
+
+        calc.calculaValorConsulta(consulta);
+
+        consultaRepository.save(consulta);
+
+        return consultaMapper.toResponse(consulta);
     }
 }
