@@ -58,6 +58,7 @@ public class ConsultaController {
         return ResponseEntity.ok().body(consultaService.listarConsultaPorIdMedico(id));
     }
     //fazer rotina que retorna todas as consultas do dia tanto para médicos e pacientes para questão de emails e relatorio diario para o médico
+    //logica de consulta no mesmo horario ou depois do expediente
     //pensar na rotina que vai notificar o cliente
     //cauculadora de consultas
 
