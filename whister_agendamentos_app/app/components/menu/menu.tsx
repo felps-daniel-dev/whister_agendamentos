@@ -1,14 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-interface MenuProps {
-  currentPath?: string; // Para identificar a página ativa, se desejar futurarmente
-}
+export const Menu: React.FC = () => {
+  const pathname = usePathname();
 
-export const Menu: React.FC<MenuProps> = () => {
   return (
     <aside className="w-64 bg-[#0d1a26] text-slate-300 flex flex-col justify-between h-screen sticky top-0 px-4 py-6 select-none shrink-0 border-r border-slate-800/50">
-      
       <div>
+        
         <div className="flex items-center gap-3 px-3 mb-8">
           <div className="w-9 h-9 rounded-xl bg-[#00828a] flex items-center justify-center text-white font-bold shadow-lg shadow-[#00828a]/20">
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -16,28 +17,29 @@ export const Menu: React.FC<MenuProps> = () => {
             </svg>
           </div>
           <div>
-            <h1 className="font-bold text-white text-base tracking-tight leading-tight">Titulo da clinica</h1>
+            <h1 className="font-bold text-white text-base tracking-tight leading-tight">Unimedicos</h1>
             <p className="text-xs text-slate-400 font-medium">Gestão Clínica</p>
           </div>
         </div>
 
+       
         <nav className="space-y-1.5">
-          <BotaoMenuBar nome="Home" href="/home/home.tsx" isActive={true} icon="home" />
-          <BotaoMenuBar nome="Pacientes" href="/pacientes" icon="users" />
-          <BotaoMenuBar nome="Médicos" href="/medicos" icon="doctor" />
-          <BotaoMenuBar nome="Consultas" href="/consultas" icon="calendar" />
-          <BotaoMenuBar nome="Salas" href="/salas" icon="room" />
-          <BotaoMenuBar nome="Planos" href="/planos" icon="shield" />
+          <BotaoMenuBar nome="Home" href="/" isActive={pathname === "/"} icon="home" />
+          <BotaoMenuBar nome="Pacientes" href="/paciente" isActive={pathname === "/paciente"} icon="users" />
+          <BotaoMenuBar nome="Médicos" href="/medico" isActive={pathname === "/medico"} icon="doctor" />
+          <BotaoMenuBar nome="Consultas" href="/consulta" isActive={pathname === "/consulta"} icon="calendar" />
+          <BotaoMenuBar nome="Salas" href="/sala" isActive={pathname === "/sala"} icon="room" />
+          <BotaoMenuBar nome="Planos" href="/plano" isActive={pathname === "/plano"} icon="shield" />
         </nav>
       </div>
 
-      
+      {/* Usuário Logado */}
       <div className="pt-4 border-t border-slate-800/80 flex items-center gap-3 px-2">
         <div className="w-9 h-9 rounded-full bg-[#00828a]/20 text-[#00828a] flex items-center justify-center font-bold text-sm border border-[#00828a]/30">
           A
         </div>
         <div className="overflow-hidden">
-          <p className="text-sm font-semibold text-slate-200 truncate leading-tight">Usuario logado</p>
+          <p className="text-sm font-semibold text-slate-200 truncate leading-tight">Admin</p>
           <p className="text-xs text-slate-400 truncate">Recepção</p>
         </div>
       </div>
@@ -56,17 +58,15 @@ const BotaoMenuBar: React.FC<BotaoMenuBarProps> = ({ nome, href, isActive, icon 
   return (
     <Link href={href} className="block">
       <button
-        className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 relative group ${
+        className={`w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 relative group cursor-pointer ${
           isActive
             ? "bg-[#182a3a] text-white shadow-sm font-semibold"
             : "text-slate-400 hover:text-slate-200 hover:bg-[#132230]"
         }`}
       >
-
         <IconByName name={icon} isActive={isActive} />
 
         <span className="truncate">{nome}</span>
-
 
         {isActive && (
           <span className="absolute right-2.5 w-1.5 h-1.5 rounded-full bg-[#00b4d8] shadow-[0_0_8px_#00b4d8]" />
