@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Calculadora {
 
     public Consulta calculaValorConsulta(Consulta consulta) {
-        double descontoTotal = 0.0;
+        BigDecimal descontoTotal = new BigDecimal("0.00");
 
         Double descontoEspecialidade = consulta.getMedico().getEspecialidade().getDescontoPromocional();
 
@@ -20,23 +20,25 @@ public class Calculadora {
 
         BigDecimal valorFinal = new BigDecimal("0.00");
 
-        double adicionalTotal = 0.0;
+        BigDecimal adicionalTotal = new BigDecimal("0.00");
 
 
-        descontoTotal = ((valorBrutoConsulta.doubleValue() / descontoPorcentagemPlano) * 100)
-                + ((valorBrutoConsulta.doubleValue() / descontoEspecialidade) * 100);
+        descontoTotal = descontoTotal.add((BigDecimal.valueOf(descontoPorcentagemPlano).multiply(valorBrutoConsulta)).divide(BigDecimal.valueOf(100)));
+        descontoTotal = descontoTotal.add((BigDecimal.valueOf(descontoEspecialidade).multiply(valorBrutoConsulta)).divide(BigDecimal.valueOf(100)));
 
-        valorFinal.add(valorBrutoConsulta.subtract(BigDecimal.valueOf(descontoTotal)));
+        valorFinal = valorFinal.add(valorBrutoConsulta.subtract(descontoTotal));
 
-        consulta.setValorDescontos(BigDecimal.valueOf(descontoTotal));
+        consulta.setValorDescontos(descontoTotal);
 
         consulta.setValorFinal(valorFinal);
 
         if (consulta.getEspecial()) {
 
-            adicionalTotal = (valorFinal.doubleValue()/ adicionalPorcentagemEspecial) * 100;
+            adicionalTotal = adicionalTotal.add(valorFinal.multiply(BigDecimal.valueOf(adicionalPorcentagemEspecial))).divide(BigDecimal.valueOf(100));
 
-            consulta.setValorFinal(valorFinal.add(BigDecimal.valueOf(adicionalTotal)));
+            valorFinal = valorFinal.add(adicionalTotal);
+
+            consulta.setValorFinal(valorFinal);
 
         }
         return consulta;
