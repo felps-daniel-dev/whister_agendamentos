@@ -2,16 +2,7 @@ export const Relatorio = () => {
     return (
         <div className="space-y-6">
 
-            {/* Cabeçalho */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Painel Principal</h1>
-                    <p className="text-sm text-slate-500">Resumo geral das atividades de hoje.</p>
-                </div>
-                <div className="self-start sm:self-auto bg-white px-4 py-2 rounded-xl border border-slate-200/80 shadow-sm">
-                    <span className="text-xs font-semibold text-slate-600">Terça-Feira, 18 De Agosto De 2026</span>
-                </div>
-            </div>
+            
 
             {/* Cards de Métricas */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
