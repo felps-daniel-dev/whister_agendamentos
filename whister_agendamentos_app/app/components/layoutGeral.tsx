@@ -4,17 +4,14 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-[#edf2f7] flex font-sans text-slate-800 antialiased">
-
+    <div className="flex h-screen bg-[#edf2f7] overflow-hidden">
       <Menu />
-      
 
-      <main className="flex-1 p-8 overflow-y-auto max-w-[1600px] mx-auto">
-        {props.children}
+      <main className="flex-1 p-8 h-screen overflow-hidden flex flex-col">
+        {children}
       </main>
-      
     </div>
   );
 };
