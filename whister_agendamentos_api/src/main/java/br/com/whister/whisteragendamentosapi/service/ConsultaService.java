@@ -85,6 +85,8 @@ public class ConsultaService {
                 .atualizadoEm(LocalDate.now())
                 .build();
 
+        calc.calculaValorConsulta(consulta);
+
         consultaRepository.save(consulta);
 
         logService.novoLog(consulta);
