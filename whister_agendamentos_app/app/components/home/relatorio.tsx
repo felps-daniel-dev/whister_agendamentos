@@ -1,10 +1,6 @@
 export const Relatorio = () => {
     return (
         <div className="space-y-6">
-
-            
-
-            {/* Cards de Métricas */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div className="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col justify-between h-32">
                     <span className="text-2xl font-bold text-slate-800">12</span>
