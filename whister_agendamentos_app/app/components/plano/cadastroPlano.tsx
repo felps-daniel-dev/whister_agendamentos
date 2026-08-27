@@ -13,12 +13,12 @@ export const CadastroPlano: React.FC<CadastroPlanoProps> = ({
   onClose,
   onSave,
 }) => {
-  // Estados para os 3 campos
+
+  
   const [nome, setNome] = useState("");
   const [qtdConsultas, setQtdConsultas] = useState<number | "">("");
   const [desconto, setDesconto] = useState<number | "">("");
 
-  // Se o modal não estiver aberto, não renderiza nada
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -105,7 +105,6 @@ export const CadastroPlano: React.FC<CadastroPlanoProps> = ({
 
           </div>
 
-          {/* Botões do Rodapé */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
             <button
               type="button"

@@ -2,7 +2,7 @@
 
 import { Data } from "../components/home/data";
 import { ListaPlanos } from "../components/plano/listagemPlano";
-import { CadastroPlano } from "../components/plano/cadastroPlnao";
+import { CadastroPlano } from "../components/plano/cadastroPlano";
 import { useState } from "react";
 
 export default function Plano() {
