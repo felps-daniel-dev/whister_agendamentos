@@ -54,14 +54,13 @@ public class ConsultaController {
     }
 
     @GetMapping("/medico/{id}/consulta")
-    public ResponseEntity<List<ConsultaResponseDTO>> listarConsultaPoridMedico(@PathVariable Long id){
+    public ResponseEntity<List<ConsultaResponseDTO>> listarConsultaPorIdMedico(@PathVariable Long id){
         return ResponseEntity.ok().body(consultaService.listarConsultaPorIdMedico(id));
     }
     // verificação de consulta no mesmo horario
     //fazer rotina que retorna todas as consultas do dia tanto para médicos e pacientes para questão de emails e relatorio diario para o médico
     //logica de consulta no mesmo horario ou depois do expediente
     //pensar na rotina que vai notificar o cliente
-    //cauculadora de consultas
 
     @PostMapping("/teste/calculo/consulta")
     public ResponseEntity<ConsultaResponseDTO> testeValorConsulta(@RequestBody ConsultaRequestDTO req){
