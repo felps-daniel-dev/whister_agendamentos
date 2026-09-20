@@ -38,6 +38,8 @@ public class ConsultaService {
 
     private final ConsultaMapper consultaMapper;
 
+    private final HorarioService horarioService;// classe de tratamento de horarios
+
     private final LogConsultaService logService;
 
 
