@@ -92,6 +92,8 @@ public class ConsultaService {
                 .atualizadoEm(LocalDate.now())
                 .build();
 
+        consulta.setEspecial(horarioService.isEspecial(consulta.getDataHora()));
+
         calc.calculaValorConsulta(consulta);
 
         consultaRepository.save(consulta);
