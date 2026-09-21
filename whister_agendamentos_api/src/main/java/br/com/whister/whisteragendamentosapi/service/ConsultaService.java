@@ -67,7 +67,7 @@ public class ConsultaService {
         // vai fazer a verificação do horario da consulta e vai fazer a
         // caso não der vai disparar uma excessao que o horario esta indisponivel
 
-        // vai ter um  metodo para fazer uma buscq que retorna os horarios disponivei verificando se v ai ser especial ou não
+        // vai ter um metodo para fazer uma buscq que retorna os horarios disponivei verificando se vai ser especial ou não
 
         Medico medico = medicoRepository.findById(request.medicoId())
                 .orElseThrow(() -> new MedicoNaoEncontrado("Este Médico não foi registrado!"));
