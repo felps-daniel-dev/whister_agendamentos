@@ -1,10 +1,12 @@
 package br.com.whister.whisteragendamentosapi.service;
 
 
+import br.com.whister.whisteragendamentosapi.entity.Especialidade;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class HorarioService {
@@ -16,7 +18,17 @@ public class HorarioService {
         LocalTime horario = dataHora.toLocalTime();
         if (horario.isBefore(INICIO_EXPEDIENTE) ||  horario.isAfter(FINAL_EXPEDIENTE)){
             return true;
+            // falta verificar a questão de feriados e finais de semana
         }
         return false;
     }
+
+   List<LocalTime> listaHorarios(Especialidade especialidade){
+        // vai caucular todos os horarios para cada especialidade e retorna
+       // pode ou não retornar apenas os diponiveis
+        return null;
+   }
+
+
+
 }
