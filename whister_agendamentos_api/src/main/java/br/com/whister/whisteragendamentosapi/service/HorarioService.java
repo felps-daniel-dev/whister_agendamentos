@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,9 @@ public class HorarioService {
         return false;
     }
 
-   List<LocalTime> listaHorarios(Especialidade especialidade){
+   List<LocalTime> listaHorariosDiario(Especialidade especialidade){
+
+        List<LocalTime> listaDeHorarios = new ArrayList<>();
         // vai caucular todos os horarios para cada especialidade e retorna
        // pode ou não retornar apenas os diponiveis
         return null;
