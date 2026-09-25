@@ -127,6 +127,7 @@ public class ConsultaService {
 
     public List<ConsultaResponseDTO> listarConsultas() {
         List<Consulta> listaConsulta = consultaRepository.findAll();
+        horarioService.listaHorariosDiario(new Especialidade());
         return consultaMapper.toResponseList(listaConsulta);
     }
 
