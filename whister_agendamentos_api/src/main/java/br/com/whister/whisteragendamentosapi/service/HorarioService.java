@@ -24,28 +24,22 @@ public class HorarioService {
         return false;
     }
 
+    // retorna todos os horario ds dia
     List<LocalTime> listaHorariosDiario(Especialidade especialidade) {
 
-
-        especialidade.setDuracao(LocalTime.parse("00:20:00"));
-        especialidade.setIntervalo(LocalTime.parse("00:10:00"));
+        LocalTime duracao = especialidade.getDuracao();
+        LocalTime intervalo = especialidade.getIntervalo();
         List<LocalTime> listaDeHorarios = new ArrayList<>();
+
         LocalTime novoHorario = INICIO_EXPEDIENTE;
+
         while (novoHorario.isBefore(FINAL_EXPEDIENTE)) {
             listaDeHorarios.add(novoHorario);
-            novoHorario = especialidade.getDuracao()
-                    .plusHours(especialidade.getIntervalo().getHour())
-                    .plusMinutes(especialidade.getIntervalo().getMinute());
+            novoHorario =  novoHorario.plusHours(duracao.getHour())
+                    .plusMinutes(duracao.getMinute())
+                    .plusHours(intervalo.getHour())
+                    .plusMinutes(intervalo.getMinute());
         }
-        // vai calcular todos os horarios para cada especialidade e retorna
-        // pode ou não retornar apenas os diponiveis
-
-        System.out.println("Horarios disponiveis");
-        System.out.println("---------------------------");
-        listaDeHorarios.forEach(h -> System.out.println(h));
-        System.out.println("---------------------------");
-
-
         return listaDeHorarios;
     }
 
