@@ -27,6 +27,8 @@ public class HorarioService {
     // retorna todos os horario ds dia
     List<LocalTime> listaHorariosDiario(Especialidade especialidade) {
 
+        // usar esse metodo pra receber uma lista de consultas e retorna os horarios livres e ocupado
+        // pode ser ate uma lista com horarios ocupados e uma com horarios vazios
         LocalTime duracao = especialidade.getDuracao();
         LocalTime intervalo = especialidade.getIntervalo();
         List<LocalTime> listaDeHorarios = new ArrayList<>();
