@@ -66,6 +66,7 @@ public class ConsultaService {
 
         // vai fazer a verificação do horario da consulta e vai fazer a
         // caso não der vai disparar uma excessao que o horario esta indisponivel
+        // relatorios
 
         // vai ter um metodo para fazer uma buscq que retorna os horarios disponivei verificando se vai ser especial ou não
 
