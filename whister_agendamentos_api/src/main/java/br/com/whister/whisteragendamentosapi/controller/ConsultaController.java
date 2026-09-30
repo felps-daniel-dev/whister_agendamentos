@@ -5,6 +5,7 @@ import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaRequestDTO;
 import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaResponseDTO;
 import br.com.whister.whisteragendamentosapi.dto.consulta.RealizarConsultaRequestDTO;
 import br.com.whister.whisteragendamentosapi.entity.Consulta;
+import br.com.whister.whisteragendamentosapi.entity.Especialidade;
 import br.com.whister.whisteragendamentosapi.service.ConsultaService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -56,6 +58,11 @@ public class ConsultaController {
     @GetMapping("/medico/{id}/consulta")
     public ResponseEntity<List<ConsultaResponseDTO>> listarConsultaPorIdMedico(@PathVariable Long id){
         return ResponseEntity.ok().body(consultaService.listarConsultaPorIdMedico(id));
+    }
+
+    @GetMapping("/horarios/{id}")// prescisa de uma especialidade
+    public ResponseEntity<List<LocalTime>> horarioDisponiveiDoDia(@PathVariable Long id){
+        return ResponseEntity.ok().body(consultaService.horariosDisponiveis(id));
     }
     // verificação de consulta no mesmo horario
     //fazer rotina que retorna todas as consultas do dia tanto para médicos e pacientes para questão de emails e relatorio diario para o médico

@@ -1,6 +1,7 @@
 package br.com.whister.whisteragendamentosapi.service;
 
 
+import br.com.whister.whisteragendamentosapi.entity.Consulta;
 import br.com.whister.whisteragendamentosapi.entity.Especialidade;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class HorarioService {
             // falta verificar a questão de feriados e finais de semana
         }
         return false;
+    }
+
+
+    List<LocalTime> listaHorariosDisponiveis(List<LocalTime>  horariosGeral, List<Consulta> consultas){
+        return null;
     }
 
     // retorna todos os horario ds dia

@@ -7,21 +7,17 @@ import br.com.whister.whisteragendamentosapi.dto.consulta.ConsultaResponseDTO;
 import br.com.whister.whisteragendamentosapi.dto.consulta.RealizarConsultaRequestDTO;
 import br.com.whister.whisteragendamentosapi.entity.*;
 import br.com.whister.whisteragendamentosapi.entity.enums.StatusConsulta;
-import br.com.whister.whisteragendamentosapi.exception.custom.ConsultaNaoEncontrada;
-import br.com.whister.whisteragendamentosapi.exception.custom.MedicoNaoEncontrado;
-import br.com.whister.whisteragendamentosapi.exception.custom.PacienteNaoEncontrado;
-import br.com.whister.whisteragendamentosapi.exception.custom.SalaNaoEncontrada;
+import br.com.whister.whisteragendamentosapi.exception.custom.*;
 import br.com.whister.whisteragendamentosapi.mapper.ConsultaMapper;
-import br.com.whister.whisteragendamentosapi.repository.ConsultaRepository;
-import br.com.whister.whisteragendamentosapi.repository.MedicoRepository;
-import br.com.whister.whisteragendamentosapi.repository.PacienteRepository;
-import br.com.whister.whisteragendamentosapi.repository.SalaRepository;
+import br.com.whister.whisteragendamentosapi.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -41,6 +37,8 @@ public class ConsultaService {
     private final HorarioService horarioService;// classe de tratamento de horarios
 
     private final LogConsultaService logService;
+
+    private EspecialidadeRepository especialidadeRepository;
 
 
     public ConsultaResponseDTO realizarConsulta(Long id, RealizarConsultaRequestDTO request) {
@@ -171,5 +169,19 @@ public class ConsultaService {
         consultaRepository.save(consulta);
 
         return consultaMapper.toResponse(consulta);
+    }
+
+    public List<LocalTime> horariosDisponiveis(Long especialidadeBusca) {
+
+        Especialidade especialidade = especialidadeRepository.findById(especialidadeBusca)
+                .orElseThrow((() -> new EspecialidadeNaoEncontrada("Especialidade não existe")));
+
+        LocalDate hoje = LocalDate.now();
+        // falta verificar consultas do dia com o filtro de especialidade
+        List<Consulta> consultasDoDia = consultaRepository.findByDataHora(hoje.atStartOfDay());// ao comecar o dia
+        List<LocalTime> horariosDoDia = horarioService.listaHorariosDiario(especialidade);
+        return horarioService.listaHorariosDisponiveis(horariosDoDia, consultasDoDia);
+        // verificar horarios em comum
+
     }
 }
