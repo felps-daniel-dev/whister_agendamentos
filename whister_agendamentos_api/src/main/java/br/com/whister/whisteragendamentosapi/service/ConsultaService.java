@@ -91,6 +91,10 @@ public class ConsultaService {
                 .atualizadoEm(LocalDate.now())
                 .build();
 
+        if (!horarioDisponivel(consulta)){
+            throw  new HorarioIndisponivel("Horário iválido ou indisponível");
+        };
+
         consulta.setEspecial(horarioService.isEspecial(consulta.getDataHora()));
 
         calc.calculaValorConsulta(consulta);
@@ -154,5 +158,13 @@ public class ConsultaService {
         List<LocalTime> horariosDoDia = horarioService.listaHorariosDiario(especialidade);
         return horarioService.listaHorariosDisponiveis(horariosDoDia, consultasDoDia);
 
+    }
+
+    private boolean horarioDisponivel(Consulta consulta) {
+
+        Especialidade especialidade = consulta.getMedico().getEspecialidade();
+        LocalDateTime dataHora = consulta.getDataHora();
+
+        return !consultaRepository.existsByMedicoEspecialidadeAndDataHora(especialidade, dataHora);
     }
 }

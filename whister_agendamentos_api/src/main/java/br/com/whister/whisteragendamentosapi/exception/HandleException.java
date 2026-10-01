@@ -13,6 +13,19 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class HandleException {
 
+    @ExceptionHandler(HorarioIndisponivel.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleHorarioIndisponivel(
+            HorarioIndisponivel ex,
+            HttpServletRequest request
+    ){
+        return buildErrorResponse(
+                HttpStatus.CONFLICT,
+                "Horario Indisponivel",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+    }
+
     @ExceptionHandler(ConsultaNaoEncontrada.class)
     public ResponseEntity<ApiErrorResponseDTO> handleConsultaNaoEncontrada(
             ConsultaNaoEncontrada ex,
