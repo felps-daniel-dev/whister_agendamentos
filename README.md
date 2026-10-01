@@ -269,20 +269,6 @@ curl -X PUT http://localhost:8080/api/consulta/1/cancelar \
 
 ---
 
-## Roadmap
-
-- [ ] Autenticação e autorização com Spring Security + JWT (preencher `alteradoPor` no log com o usuário real)
-- [ ] Testes unitários (`Calculadora`, `HorarioService`) e de integração com Testcontainers
-- [ ] Migrations com Flyway no lugar de `ddl-auto=update`
-- [ ] Paginação nas listagens
-- [ ] Consultas gratuitas por trimestre conforme o plano do paciente
-- [ ] Tratamento de feriados e finais de semana na grade de horários
-- [ ] Relatório diário por médico com JasperReports
-- [ ] Notificação de consulta por e-mail
-- [ ] Dockerfile e `docker-compose` para subir API + banco
-
----
-
 ## Autor
 
 [felps-daniel-dev](https://github.com/felps-daniel-dev) — [GitHub](https://github.com/felps-daniel-dev)
