@@ -39,6 +39,8 @@ public class ConsultaService {
 
     private final LogConsultaService logService;
 
+    private final Calculadora calc;
+
     private EspecialidadeRepository especialidadeRepository;
 
 
@@ -138,36 +140,6 @@ public class ConsultaService {
         return consultaMapper.toResponseList(listaConsultas);
     }
 
-    @Autowired
-    private Calculadora calc;
-
-    public ConsultaResponseDTO testeCalculoConsulta(ConsultaRequestDTO req) {
-        Consulta consulta = consultaMapper.toEntity(req);
-
-        consulta.setMedico(medicoRepository.findById(req.medicoId())
-                .orElseThrow(() -> new MedicoNaoEncontrado("Este médico não existe!"))
-        );
-
-        consulta.setPaciente(
-                pacienteRepository.findById(req.pacienteId())
-                        .orElseThrow(() -> new PacienteNaoEncontrado("Este paciente não existe!"))
-        );
-
-        consulta.setSala(
-                salaRepository.findById(req.salaId())
-                        .orElseThrow(() -> new SalaNaoEncontrada("Esta Sala não existe!"))
-        );
-
-        consulta.setCriadoEm(LocalDate.now());
-        consulta.setAtualizadoEm(LocalDate.now());
-        consultaRepository.save(consulta);
-
-        calc.calculaValorConsulta(consulta);
-
-        consultaRepository.save(consulta);
-
-        return consultaMapper.toResponse(consulta);
-    }
 
     public List<LocalTime> horariosDisponiveisEspecialidade(Long especialidadeBusca) {
 
