@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class HorarioService {
@@ -27,14 +29,18 @@ public class HorarioService {
 
 
     List<LocalTime> listaHorariosDisponiveis(List<LocalTime>  horariosGeral, List<Consulta> consultas){
-        return null;
+
+        Set<LocalTime> horariosOcupados = consultas.stream()
+                .map(consulta -> consulta.getDataHora().toLocalTime())
+                .collect(Collectors.toSet());
+
+        return horariosGeral.stream()
+                .filter(horario -> !horariosOcupados.contains(horario))
+                .toList();
     }
 
-    // retorna todos os horario ds dia
     List<LocalTime> listaHorariosDiario(Especialidade especialidade) {
 
-        // usar esse metodo pra receber uma lista de consultas e retorna os horarios livres e ocupado etc
-        // pode ser ate uma lista com horarios ocupados e uma com horarios vazios
         LocalTime duracao = especialidade.getDuracao();
         LocalTime intervalo = especialidade.getIntervalo();
         List<LocalTime> listaDeHorarios = new ArrayList<>();
