@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,8 @@ public class ConsultaService {
     private final HorarioService horarioService;// classe de tratamento de horarios
 
     private final LogConsultaService logService;
+
+    private final Calculadora calc;
 
     private EspecialidadeRepository especialidadeRepository;
 
@@ -62,11 +65,8 @@ public class ConsultaService {
 
     public ConsultaResponseDTO novaConsulta(ConsultaRequestDTO request) {
 
-        // vai fazer a verificação do horario da consulta e vai fazer a
-        // caso não der vai disparar uma excessao que o horario esta indisponivel
-        // relatorios
 
-        // vai ter um metodo para fazer uma buscq que retorna os horarios disponivei verificando se vai ser especial ou não
+        // relatorios
 
         Medico medico = medicoRepository.findById(request.medicoId())
                 .orElseThrow(() -> new MedicoNaoEncontrado("Este Médico não foi registrado!"));
@@ -90,6 +90,10 @@ public class ConsultaService {
                 .criadoEm(LocalDate.now())
                 .atualizadoEm(LocalDate.now())
                 .build();
+
+        if (!horarioDisponivel(consulta)){
+            throw  new HorarioIndisponivel("Horário iválido ou indisponível");
+        };
 
         consulta.setEspecial(horarioService.isEspecial(consulta.getDataHora()));
 
@@ -140,48 +144,27 @@ public class ConsultaService {
         return consultaMapper.toResponseList(listaConsultas);
     }
 
-    @Autowired
-    private Calculadora calc;
 
-    public ConsultaResponseDTO testeCalculoConsulta(ConsultaRequestDTO req) {
-        Consulta consulta = consultaMapper.toEntity(req);
-
-        consulta.setMedico(medicoRepository.findById(req.medicoId())
-                .orElseThrow(() -> new MedicoNaoEncontrado("Este médico não existe!"))
-        );
-
-        consulta.setPaciente(
-                pacienteRepository.findById(req.pacienteId())
-                        .orElseThrow(() -> new PacienteNaoEncontrado("Este paciente não existe!"))
-        );
-
-        consulta.setSala(
-                salaRepository.findById(req.salaId())
-                        .orElseThrow(() -> new SalaNaoEncontrada("Esta Sala não existe!"))
-        );
-
-        consulta.setCriadoEm(LocalDate.now());
-        consulta.setAtualizadoEm(LocalDate.now());
-        consultaRepository.save(consulta);
-
-        calc.calculaValorConsulta(consulta);
-
-        consultaRepository.save(consulta);
-
-        return consultaMapper.toResponse(consulta);
-    }
-
-    public List<LocalTime> horariosDisponiveis(Long especialidadeBusca) {
+    public List<LocalTime> horariosDisponiveisEspecialidade(Long especialidadeBusca) {
 
         Especialidade especialidade = especialidadeRepository.findById(especialidadeBusca)
                 .orElseThrow((() -> new EspecialidadeNaoEncontrada("Especialidade não existe")));
 
         LocalDate hoje = LocalDate.now();
-        // falta verificar consultas do dia com o filtro de especialidade
-        List<Consulta> consultasDoDia = consultaRepository.findByDataHora(hoje.atStartOfDay());// ao comecar o dia
+        List<Consulta> consultasDoDia = consultaRepository.findByDataHora(hoje.atStartOfDay()).stream()
+                .filter(consu ->
+                        consu.getMedico().getEspecialidade().equals(especialidade)).collect(Collectors.toList()
+                );
         List<LocalTime> horariosDoDia = horarioService.listaHorariosDiario(especialidade);
         return horarioService.listaHorariosDisponiveis(horariosDoDia, consultasDoDia);
-        // verificar horarios em comum
 
+    }
+
+    private boolean horarioDisponivel(Consulta consulta) {
+
+        Especialidade especialidade = consulta.getMedico().getEspecialidade();
+        LocalDateTime dataHora = consulta.getDataHora();
+
+        return !consultaRepository.existsByMedicoEspecialidadeAndDataHora(especialidade, dataHora);
     }
 }
